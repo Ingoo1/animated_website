@@ -73,3 +73,56 @@ const tlSplitPin = gsap.timeline({
     end: '100%',
   },
 });
+
+//Carousel
+
+const swatches = document.querySelectorAll('.swatches img');
+const gallery = document.querySelector('.phone-gallery');
+const slides = document.querySelectorAll('.phone-gallery-container');
+
+let currentSwatch = 'blue';
+let topIndex = 2;
+
+swatches.forEach((swatch, index) => {
+  const coord = slides[index].getBoundingClientRect().left;
+  console.log(coord);
+
+  swatch.addEventListener('click', (e) => {
+    let swatchName = e.target.getAttribute('swatch');
+    let closeUp = document.querySelector('.' + swatchName);
+    //Check if we are on the same swatch
+    if (currentSwatch === swatchName) return;
+
+    gsap.set(closeUp, { zIndex: topIndex });
+    gsap.fromTo(closeUp, { opacity: 0 }, { opacity: 1, duration: 1 });
+    console.log(coord);
+    //Gallery
+    gsap.to(gallery, { x: -coord, duration: 1, ease: 'back.out(1)' });
+    //Increment zIndex
+    topIndex++;
+    currentSwatch = swatchName;
+  });
+});
+
+//Page 5 video on scroll
+const tlVideo = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.fifth-page',
+    start: '0%',
+    end: '150%',
+    scrub: true,
+    pin: true,
+  },
+});
+tlVideo.fromTo(
+  '.product-video',
+  { currentTime: 0 },
+  { currentTime: 3, duration: 1 }
+);
+
+tlVideo.fromTo(
+  '.product-info-container h3',
+  { opacity: 0 },
+  { opacity: 1, stagger: 0.25, duration: 0.5 },
+  '<'
+);
