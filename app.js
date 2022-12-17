@@ -13,7 +13,6 @@ const tlIntro = gsap.timeline({
 const tlH = gsap.timeline({
   scrollTrigger: {
     trigger: '.second-page',
-    markers: { startColor: 'blue', endColor: 'blue' },
     scrub: true,
     start: '-40%',
     end: '40%',
@@ -29,7 +28,6 @@ tlH.fromTo(
 const tlHRemove = gsap.timeline({
   scrollTrigger: {
     trigger: '.second-page',
-    markers: { startColor: 'pink', endColor: 'pink' },
     scrub: true,
     start: '-20%',
     end: '60%',
@@ -44,7 +42,6 @@ const tlSplit = gsap.timeline({
     trigger: '.third-page',
     start: '-25%',
     end: '30%',
-    markers: true,
     scrub: true,
   },
 });
@@ -85,7 +82,6 @@ let topIndex = 2;
 
 swatches.forEach((swatch, index) => {
   const coord = slides[index].getBoundingClientRect().left;
-  console.log(coord);
 
   swatch.addEventListener('click', (e) => {
     let swatchName = e.target.getAttribute('swatch');
@@ -95,7 +91,6 @@ swatches.forEach((swatch, index) => {
 
     gsap.set(closeUp, { zIndex: topIndex });
     gsap.fromTo(closeUp, { opacity: 0 }, { opacity: 1, duration: 1 });
-    console.log(coord);
     //Gallery
     gsap.to(gallery, { x: -coord, duration: 1, ease: 'back.out(1)' });
     //Increment zIndex
@@ -126,3 +121,21 @@ tlVideo.fromTo(
   { opacity: 1, stagger: 0.25, duration: 0.5 },
   '<'
 );
+
+//6th Page
+const tlParallax = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.sixth-page',
+    start: '-25%',
+    end: '50%',
+    scrub: true,
+  },
+});
+
+tlParallax.fromTo(
+  '.photo-description',
+  { y: 0, opacity: 0.5, scale: 0.7 },
+  { y: -80, opacity: 1, scale: 1 }
+);
+tlParallax.fromTo('.portrait-container', { y: 0 }, { y: -80 }, '<');
+tlParallax.fromTo('.phone-video', { y: 0 }, { y: -200 }, '<');
